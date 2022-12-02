@@ -1,0 +1,72 @@
+#!/bin/bash
+ 
+echo "choose what you want to do "
+echo "[01] accounts"
+echo "[02] groups"
+ 
+        read choice
+ 
+if [ $choice = "1" ]
+        then
+                echo "name of user"
+                        read name
+                echo "[01] create user"
+                echo "[02] delete user"
+                echo "[03] change user psswd"
+ 
+                        read ans
+ 
+                        if [[ $ans = "1" ]];
+                                then
+                                        echo "[01] admin account"
+                                        echo "[02] user"
+                                                read accounttype
+ 
+                                                if [[ $accounttype = "1" ]];
+                                                        then
+                                                        useradd -d admin $name
+ 
+                                                else
+                                                        useradd -d $name
+                                                fi
+                        elif [[ $ans = "2" ]];
+                                then
+                                        userdel $name
+ 
+                        else
+                                passwd $name
+                        fi
+ 
+ 
+ 
+elif [ $choice = "2" ]
+        then
+                echo "what group"
+                        read group
+                echo "[01] create group"
+                echo "[02] delete group"
+                echo "[03] add or delete user from group"
+                        read anss
+                        if [ $anss = "1" ]
+                                then
+                                        groupadd $group
+ 
+                        elif [ $anss = "2" ]
+                                then
+                                        groupdel $group
+                        else
+                                echo "[01] add"
+			echo "[02] detele"
+                                        read aord
+ 
+                                        if [ $aord = "1" ]
+                                                then
+                                                        usermod -a -G $group $name
+                                        else
+                                                gpasswd -d $name $group
+ 
+                                        fi
+ 
+                        fi
+ 
+fi
